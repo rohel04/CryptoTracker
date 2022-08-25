@@ -1,10 +1,7 @@
-import 'package:cryptocurrency_tracker/provider/MarketProvider.dart';
 import 'package:cryptocurrency_tracker/provider/ThemeProvider.dart';
-import 'package:cryptocurrency_tracker/screens/details.dart';
+import 'package:cryptocurrency_tracker/service/auth_service.dart';
 import 'package:cryptocurrency_tracker/widget/markets.dart';
 import 'package:flutter/material.dart';
-import 'package:cryptocurrency_tracker/service/API.dart';
-import 'package:cryptocurrency_tracker/model/cryptoCurrency.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     ThemeProvider themeProvider=Provider.of<ThemeProvider>(context);
+    final authProvider=Provider.of<AUthService>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -28,7 +26,14 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget> [
-              Text('Welcome Back',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+            Expanded(child: Text('Welcome Back',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500))),
+                    IconButton(onPressed: () async{
+                      await authProvider.signOut();
+                    }, icon: Icon(Icons.logout))
+          ]),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
